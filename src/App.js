@@ -11,12 +11,6 @@ function App() {
   const [awayTeam] = useState("Tigers");
   const [quarter, setQuarter] = useState(1);
 
-  useEffect(() => {
-    if(quarter > 4) {
-      return setQuarter(1);
-    }
-  }, [quarter]);
-
   const scorePoints = (points, teamName) => {
     if(teamName === homeTeam) {
       return setHomeScore(homeScore + points);
@@ -26,6 +20,31 @@ function App() {
       return console.error("incorrect team name passed.");
     }
   }
+
+  const initGame = () => {
+    setHomeScore(0);
+    setAwayScore(0);
+    return setQuarter(1);
+  }
+
+  const endGame = () => {
+    if(homeScore > awayScore) {
+      return `${homeTeam} wins ${homeScore} to ${awayScore}!`;
+    } else if(awayScore > homeScore) {
+      return `${awayTeam} wins ${awayScore} to ${homeScore}!`;
+    } else {
+      return "It's a tie!";
+    }
+  }
+
+  useEffect(() => {
+    if(quarter > 4) {
+      const endGameMessage = endGame();
+      alert(endGameMessage);
+
+      return initGame();
+    }
+  }, [quarter]);
 
   return (
     <div className="container">
