@@ -1,5 +1,5 @@
 //TODO: STEP 1 - Import the useState hook.
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import BottomRow from "./BottomRow";
 import "./App.css";
 
@@ -9,6 +9,13 @@ function App() {
   const [awayScore, setAwayScore] = useState(0);
   const [homeTeam] = useState("Lions");
   const [awayTeam] = useState("Tigers");
+  const [quarter, setQuarter] = useState(1);
+
+  useEffect(() => {
+    if(quarter > 4) {
+      return setQuarter(1);
+    }
+  }, [quarter]);
 
   const scorePoints = (points, teamName) => {
     if(teamName === homeTeam) {
@@ -36,7 +43,7 @@ function App() {
             <div className="away__score">{awayScore}</div>
           </div>
         </div>
-        <BottomRow />
+        <BottomRow quarter={quarter}/>
       </section>
       <section className="buttons">
         <div className="homeButtons">
@@ -49,6 +56,8 @@ function App() {
           <button onClick={() => scorePoints(7, awayTeam)} className="awayButtons__touchdown">Away Touchdown</button>
           <button onClick={() => scorePoints(3, awayTeam)} className="awayButtons__fieldGoal">Away Field Goal</button>
         </div>
+
+        <button onClick={() => setQuarter(quarter + 1)}>Next Quarter</button>
       </section>
     </div>
   );
