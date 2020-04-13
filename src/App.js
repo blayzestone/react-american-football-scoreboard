@@ -36,7 +36,7 @@ function App() {
   }
 
   const updateQuarter = () => {
-    const overtime = "Overtime";
+    const overtime = "OT";
     if(quarter < 4) {
       return setQuarter(quarter + 1)
     } else if(homeScore === awayScore) {
