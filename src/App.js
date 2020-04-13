@@ -32,19 +32,22 @@ function App() {
       return `${homeTeam} wins ${homeScore} to ${awayScore}!`;
     } else if(awayScore > homeScore) {
       return `${awayTeam} wins ${awayScore} to ${homeScore}!`;
-    } else {
-      return "It's a tie!";
     }
   }
 
-  useEffect(() => {
-    if(quarter > 4) {
+  const updateQuarter = () => {
+    const overtime = "Overtime";
+    if(quarter < 4) {
+      return setQuarter(quarter + 1)
+    } else if(homeScore === awayScore) {
+      return setQuarter(overtime);
+    } else {
       const endGameMessage = endGame();
       alert(endGameMessage);
 
       return initGame();
     }
-  }, [quarter]);
+  }
 
   return (
     <div className="container">
@@ -76,7 +79,7 @@ function App() {
           <button onClick={() => scorePoints(3, awayTeam)} className="awayButtons__fieldGoal">Away Field Goal</button>
         </div>
 
-        <button onClick={() => setQuarter(quarter + 1)}>Next Quarter</button>
+        <button onClick={updateQuarter}>Next Quarter</button>
       </section>
     </div>
   );
